@@ -156,8 +156,44 @@ body {
 
 .main-section {
   display: flex;
+  justify-content: center;
   flex-direction: column;
-  margin-top: 5rem;
+  margin-top: 7rem;
+  margin-right: auto;
+  margin-left: auto;
+  height: 100%;
+  width: 100%;
+  border: 1px solid red;
+  padding: 2rem;
+  max-width: 1900px;
+}
+
+.dash{
+  color: red;
+}
+
+.user-details{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 2rem;
+}
+
+.account-details{
+  display: flex;
+  padding: 2rem;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.cover {
+  width: 30%;
+  height: 20%;
+  border: 1px solid blue;
+}
+
+.hide{
+  visibility: hidden;
 }
 
 .link-back {
@@ -797,6 +833,15 @@ textarea {
 /* register section */
 .register {
   margin-top: 5rem;
+  
+}
+
+.login, .register {
+ border: 1px solid red;
+ display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
 }
 
 .login {
@@ -1009,7 +1054,10 @@ textarea {
 
 .footer {
   width: 100%;
+  position: fixed;
+  bottom: 0;
   background-color: #007cff;
+  max-height: 5rem;
 }
 
 .footer-copy {

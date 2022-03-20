@@ -28,7 +28,8 @@ const Login = () => {
     e.preventDefault();
     if (email === "" || password === "") {
       setMessage("Please fill all fields");
-    } else {;
+    } else {
+      dispatch(login(email, password))
     }
   };
 
