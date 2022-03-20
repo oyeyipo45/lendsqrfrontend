@@ -15,9 +15,9 @@ function App() {
   return (
     <Router>
       <Suspense fallback={'...loading !!!!!'}>
-        <div className='main-body'>
-          <Header />
-          <main className='main-section'>
+        <div className=''>
+          {/* <Header /> */}
+          <main className=''>
             <Routes>
               <Route path='/login' element={<Login />} />
               <Route path='/register' element={<Register />} />
@@ -25,7 +25,7 @@ function App() {
               <Route path='*' element={<Notfound />} />
             </Routes>
           </main>
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </Suspense>
     </Router>

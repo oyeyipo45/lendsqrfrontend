@@ -1,11 +1,27 @@
 import React,{  useState, useEffect} from 'react'
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../redux/actions";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
 
+  const navigate = useNavigate();
+  
    const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState(null);
+
+  const dispatch = useDispatch();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo, loading, error } = userLogin;
+
+   useEffect(() => {
+    if (userInfo) {
+      navigate('/dashboard')
+    }
+  }, [userInfo]);
 
 
   const submitHandler = (e) => {
@@ -21,7 +37,9 @@ const Login = () => {
       <div className="customer-signin">
         <div className="customer-signin-header">
           <h3 className="customer-signin-heading">Log In</h3>
-
+          {message && <p>{message}</p>}
+          {error && <p className="color-red">{error}</p>}
+          {loading && "LOADING  ......"}
         </div>
 
         <form
