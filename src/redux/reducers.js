@@ -10,6 +10,12 @@ import {
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
   USER_DETAILS_RESET,
+  WITHDRAWAL_SUCCESS,
+  WITHDRAWAL_FAIL,
+  WITHDRAWAL_REQUEST,
+  LODGEMENT_SUCCESS,
+  LODGEMENT_FAIL,
+  LODGEMENT_REQUEST,
 } from './constants';
 
 
@@ -19,7 +25,7 @@ export const userLoginReducer = (state = {}, action) => {
     case USER_LOGIN_REQUEST:
       return { loading: true };
     case USER_LOGIN_SUCCESS:
-      return { loading: false, userInfo: action.payload };
+      return { loading: false, userInfo: action.payload , success :true};
     case USER_LOGIN_FAIL:
       return { loading: false, error: action.payload };
     case USER_LOGOUT:
@@ -53,6 +59,33 @@ export const userDetailsReducer = (state = { user: {} }, action) => {
       return { loading: false, error: action.payload };
     case USER_DETAILS_RESET:
       return { user: {} };
+    default:
+      return state;
+  }
+};
+
+
+export const withdrawalReducer = (state = {}, action) => {
+  switch (action.type) {
+    case WITHDRAWAL_REQUEST: 
+      return { loading: true };
+    case WITHDRAWAL_SUCCESS:
+      return { loading: false, withdrawal : action.payload, success  : true };
+    case WITHDRAWAL_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const lodgementReducer = (state = {}, action) => {
+  switch (action.type) {
+    case LODGEMENT_REQUEST:
+      return { loading: true };
+    case LODGEMENT_SUCCESS:
+      return { loading: false, lodgement: action.payload, success: true };
+    case LODGEMENT_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

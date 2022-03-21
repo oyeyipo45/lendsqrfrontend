@@ -4,14 +4,15 @@ import Footer from '../components/Footer'
 import Header from '../components/Header'
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getUserDetails } from "../redux/actions";
+import { getUserDetails, withdraw, lodgement } from "../redux/actions";
+import  jwtGen from "../utils"
 
 const Dashboard = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const [withdrawalAmount, setWithdrawalAmount] = useState('')
+  const [LodgementAmount, setLodgementAmount] = useState('')
   const [receiver_username, setReceiver_username] = useState('')
   const [tansfer_amount, setTansfer_amount] = useState('')
 
@@ -21,24 +22,38 @@ const Dashboard = () => {
    const userDetails = useSelector((state) => state.userDetails);
   const { user, loading : userDetailsloading, error : userDetailserror } = userDetails;
 
-  console.log(userInfo)
+  const withdrawal = useSelector((state) => state.withdrawal);
+  const { success: withdrawalSuccess, loading: withdrawalLoading, error: withdrawalError } = withdrawal;
+  
+  const lodgementState = useSelector((state) => state.lodgement);
+  const { success :lodgementSuccess, loading :  lodgementLoading, error : lodgementError } = lodgementState;
 
-  const withdraw = () => {
-    console.log("fdfdf")
+  const withdrawHandler = () => {
+    const amount = jwtGen(withdrawalAmount);
+    dispatch(withdraw(amount))
+    setWithdrawalAmount('')
   }
 
-   const transfer = () => {
-    console.log("fdfdf")
+  const lodgmentHandler = () => {
+    const amount = jwtGen(LodgementAmount);
+    dispatch(lodgement(amount))
+    setLodgementAmount('')
   }
+
+   const transferHandler = () => {
+    console.log("fdfdf")
+   }
+  
+  
   
 
   useEffect(() => {
-    if (!userInfo & !user) {
+    if (!userInfo) {
     navigate('/login')
     } else {
       dispatch(getUserDetails())
     }
-  }, [userInfo]);
+  }, [userInfo, withdrawalSuccess, lodgementSuccess]);
 
 
   return (
@@ -80,17 +95,40 @@ const Dashboard = () => {
 
         <section className="account-details">
           
-           <section className="cover hide" >Wallet</section>
           <section className="cover">
-            <h4 align='center'>Withdrawal</h4>
-            <form
-          action=""
-          
-          className="customer-signin-form"
-        >
+                <h4 align='center'>Fund Account</h4>
+                <form
+              action=""
+              
+              className="customer-signin-form"
+            >
           <div className="customer-signin-form-group">
             <input
-              type="email"
+              type="number"
+              className="customer-signin-form-input"
+              placeholder="Amount"
+              required
+              value={LodgementAmount}
+              onChange={(e) => setLodgementAmount(e.target.value)}
+            />
+          </div>
+          <div className="customer-signin-form-group">
+            <button type="submit" onClick={lodgmentHandler} className="customer-signin-btn">
+             Fund Account
+            </button>
+          </div>
+            </form>
+          </section>
+              <section className="cover">
+                <h4 align='center'>Withdrawal</h4>
+                <form
+              action=""
+              
+              className="customer-signin-form"
+            >
+          <div className="customer-signin-form-group">
+            <input
+              type="number"
               className="customer-signin-form-input"
               placeholder="Amount"
               required
@@ -99,11 +137,12 @@ const Dashboard = () => {
             />
           </div>
           <div className="customer-signin-form-group">
-            <button type="submit" onClick={withdraw} className="customer-signin-btn">
+            <button type="submit" onClick={withdrawHandler} className="customer-signin-btn">
              Withdraw
             </button>
           </div>
-        </form></section>
+            </form>
+          </section>
           <section className="cover">
             <h4 align='center'>Transfer</h4>
             <form
@@ -133,7 +172,7 @@ const Dashboard = () => {
             />
           </div>
           <div className="customer-signin-form-group">
-            <button type="submit" onClick={transfer} className="customer-signin-btn">
+            <button type="submit" onClick={transferHandler} className="customer-signin-btn">
               Transfer
             </button>
           </div>

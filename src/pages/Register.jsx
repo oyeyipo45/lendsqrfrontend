@@ -21,14 +21,25 @@ const Register = () => {
   const userRegister = useSelector((state) => state.userRegister);
   const { userInfo, loading, error } = userRegister;
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const {  userInfo :  userLoginInfo, loading : userLoginLoading, error : userLoginError } = userLogin;
+  // const userLogin = useSelector((state) => state.userLogin);
+  // const {  userInfo :  userLoginInfo, loading : userLoginLoading, error : userLoginError } = userLogin;
 
-  useEffect(() => {
-    if (userInfo || userLoginInfo) {
-    navigate('/dashboard')
+  // useEffect(() => {
+  //   if (userInfo || userLoginInfo) {
+  //   navigate('/dashboard')
+  //   }
+  // }, [userInfo, userLoginInfo]);
+  
+  const userDetails = useSelector((state) => state.userDetails);
+  const { user, loading : loadingUserDetails, error : errorUserDetails } = userDetails;
+
+  console.log(user)
+   useEffect(() => {
+    if (user) {
+      navigate('/dashboard')
     }
-  }, [ userInfo, userLoginInfo]);
+  }, [user]);
+
 
   const submitHandler = (e) => {
     e.preventDefault();

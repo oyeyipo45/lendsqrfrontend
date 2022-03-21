@@ -12,6 +12,12 @@ import {
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
   USER_DETAILS_RESET,
+  WITHDRAWAL_REQUEST,
+  WITHDRAWAL_SUCCESS,
+  WITHDRAWAL_FAIL,
+  LODGEMENT_REQUEST,
+  LODGEMENT_SUCCESS,
+  LODGEMENT_FAIL,
 } from './constants';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL
@@ -112,6 +118,67 @@ export const getUserDetails = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USER_DETAILS_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
+  }
+};
+
+export const withdraw = (amount) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: WITHDRAWAL_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo?.data?.token}`,
+      },
+    };
+    const { data } = await axios.put(`${BASE_URL}/withdraw`, { amount }, config);
+
+    dispatch({
+      type: WITHDRAWAL_SUCCESS,
+      payload: data,
+    });
+
+  } catch (error) {
+    dispatch({
+      type: WITHDRAWAL_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
+  }
+};
+
+export const lodgement = (amount) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: LODGEMENT_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo?.data?.token}`,
+      },
+    };
+    const { data } = await axios.put(`${BASE_URL}/fund-wallet`, { amount }, config);
+
+    dispatch({
+      type: LODGEMENT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: LODGEMENT_FAIL,
       payload: error.response && error.response.data.message ? error.response.data.message : error.message,
     });
   }

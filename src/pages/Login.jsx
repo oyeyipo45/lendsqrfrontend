@@ -17,11 +17,15 @@ const Login = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo, loading, error } = userLogin;
 
+   const userDetails = useSelector((state) => state.userDetails);
+  const { user, loading : userDetailsLoading, error : userDetailsError } = userDetails;
+
+
    useEffect(() => {
     if (userInfo) {
       navigate('/dashboard')
     }
-  }, [userInfo]);
+  }, [user]);
 
 
   const submitHandler = (e) => {
