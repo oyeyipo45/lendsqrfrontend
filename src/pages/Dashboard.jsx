@@ -4,7 +4,7 @@ import Footer from '../components/Footer'
 import Header from '../components/Header'
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getUserDetails, withdraw, lodgement } from "../redux/actions";
+import { getUserDetails, withdraw, lodgement, transfer } from "../redux/actions";
 import  jwtGen from "../utils"
 
 const Dashboard = () => {
@@ -20,13 +20,18 @@ const Dashboard = () => {
   const { userInfo, loading, error } = userLogin;
 
    const userDetails = useSelector((state) => state.userDetails);
-  const { user, loading : userDetailsloading, error : userDetailserror } = userDetails;
+  const { user, loading : userDetailsloading, error : userDetailsError } = userDetails;
 
   const withdrawal = useSelector((state) => state.withdrawal);
   const { success: withdrawalSuccess, loading: withdrawalLoading, error: withdrawalError } = withdrawal;
   
   const lodgementState = useSelector((state) => state.lodgement);
-  const { success :lodgementSuccess, loading :  lodgementLoading, error : lodgementError } = lodgementState;
+  const { success: lodgementSuccess, loading: lodgementLoading, error: lodgementError } = lodgementState;
+  
+  const transferState = useSelector((state) => state.transfer);
+  const { success :transferSuccess, loading :  transferLoading, error : transferError } = transferState;
+
+  console.log(transferSuccess, "transferSuccess")
 
   const withdrawHandler = () => {
     const amount = jwtGen(withdrawalAmount);
@@ -35,25 +40,31 @@ const Dashboard = () => {
   }
 
   const lodgmentHandler = () => {
+    console.log(LodgementAmount, "LodgementAmount")
     const amount = jwtGen(LodgementAmount);
     dispatch(lodgement(amount))
     setLodgementAmount('')
   }
 
-   const transferHandler = () => {
-    console.log("fdfdf")
-   }
-  
-  
-  
+  const transferHandler = () => {
+    console.log( receiver_username, tansfer_amount, " receiver_username, tansfer_amount")
+    const payload = jwtGen({ receiver_username, tansfer_amount })
+    dispatch(transfer(payload))
+    setReceiver_username('')
+    setTansfer_amount('')
+  }
 
+  console.log(userDetailsError, "userDetailsError")
+  
   useEffect(() => {
-    if (!userInfo) {
-    navigate('/login')
-    } else {
-      dispatch(getUserDetails())
-    }
-  }, [userInfo, withdrawalSuccess, lodgementSuccess]);
+
+    dispatch(getUserDetails())
+    // if (!userInfo) {
+    //  // navigate('/login')
+    // } else {
+    //   dispatch(getUserDetails())
+    // } 
+  }, [ withdrawalSuccess, lodgementSuccess, transferSuccess]);
 
 
   return (
@@ -94,14 +105,12 @@ const Dashboard = () => {
         </section>
 
         <section className="account-details">
-          
           <section className="cover">
-                <h4 align='center'>Fund Account</h4>
-                <form
-              action=""
-              
-              className="customer-signin-form"
-            >
+          <h4 align='center'>Fund Account</h4>
+                {lodgementSuccess && <p className="color-green">lodgement successful</p>}
+                {lodgementError && <p className="color-red">{lodgementError}</p>}
+                {transferLoading && "Sending ......"}
+          <form action=""  className="customer-signin-form" >
           <div className="customer-signin-form-group">
             <input
               type="number"
@@ -109,7 +118,16 @@ const Dashboard = () => {
               placeholder="Amount"
               required
               value={LodgementAmount}
-              onChange={(e) => setLodgementAmount(e.target.value)}
+              onChange={(e) => {
+                let val = parseInt(e.target.value, 10);
+                if (isNaN(val)) {
+                  setLodgementAmount("");
+                } else {
+                  // is A Number
+                  val = val >= 0 ? val : 0;
+                  setLodgementAmount(val);
+                }
+              }}
             />
           </div>
           <div className="customer-signin-form-group">
@@ -119,8 +137,11 @@ const Dashboard = () => {
           </div>
             </form>
           </section>
-              <section className="cover">
-                <h4 align='center'>Withdrawal</h4>
+          <section className="cover">
+            <h4 align='center'>Withdrawal</h4>
+             {withdrawalSuccess && <p className="color-green">withdrawal successful</p>}
+            {withdrawalError && <p className="color-red">{withdrawalError}</p>}
+            {transferLoading && "Sending ......"}
                 <form
               action=""
               
@@ -133,7 +154,16 @@ const Dashboard = () => {
               placeholder="Amount"
               required
               value={withdrawalAmount}
-              onChange={(e) => setWithdrawalAmount(e.target.value)}
+              onChange={(e) => {
+                let val = parseInt(e.target.value, 10);
+                if (isNaN(val)) {
+                  setWithdrawalAmount("");
+                } else {
+                  // is A Number
+                  val = val >= 0 ? val : 0;
+                  setWithdrawalAmount(val);
+                }
+              }}
             />
           </div>
           <div className="customer-signin-form-group">
@@ -145,6 +175,9 @@ const Dashboard = () => {
           </section>
           <section className="cover">
             <h4 align='center'>Transfer</h4>
+            {transferSuccess && <p className="color-green">Transfer successful</p>}
+            {transferError && <p className="color-red">{transferError}</p>}
+            {transferLoading && "Sending ......"}
             <form
               
           action=""
@@ -168,7 +201,16 @@ const Dashboard = () => {
               placeholder="Amout"
               required
               value={tansfer_amount}
-              onChange={(e) => setTansfer_amount(e.target.value)}
+              onChange={(e) => {
+                let val = parseInt(e.target.value, 10);
+                if (isNaN(val)) {
+                  setTansfer_amount("");
+                } else {
+                  val = val >= 0 ? val : 0;
+                  setTansfer_amount(val);
+                }
+              }}
+                  
             />
           </div>
           <div className="customer-signin-form-group">
@@ -176,7 +218,8 @@ const Dashboard = () => {
               Transfer
             </button>
           </div>
-        </form></section>
+            </form>
+          </section>
         </section>
        </main>
       <Footer/>

@@ -15,9 +15,9 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo, loading, error } = userLogin;
+  const { userInfo, loading, error, success } = userLogin;
 
-   const userDetails = useSelector((state) => state.userDetails);
+  const userDetails = useSelector((state) => state.userDetails);
   const { user, loading : userDetailsLoading, error : userDetailsError } = userDetails;
 
 
@@ -25,7 +25,10 @@ const Login = () => {
     if (userInfo) {
       navigate('/dashboard')
     }
-  }, [user]);
+    // else if (user) {
+    //   navigate('/dashboard')
+    // }
+  }, [success, user]);
 
 
   const submitHandler = (e) => {

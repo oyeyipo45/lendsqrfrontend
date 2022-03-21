@@ -18,6 +18,9 @@ import {
   LODGEMENT_REQUEST,
   LODGEMENT_SUCCESS,
   LODGEMENT_FAIL,
+  TRANSFER_REQUEST,
+  TRANSFER_SUCCESS,
+  TRANSFER_FAIL,
 } from './constants';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL
@@ -54,8 +57,8 @@ export const login = (email, password) => async (dispatch) => {
 
 export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo');
-  dispatch({ type: USER_LOGOUT });
   dispatch({ type: USER_DETAILS_RESET });
+  dispatch({ type: USER_LOGOUT });
 };
 
 
@@ -179,6 +182,36 @@ export const lodgement = (amount) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: LODGEMENT_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
+  }
+};
+
+export const transfer = (payload) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: TRANSFER_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo?.data?.token}`,
+      },
+    };
+    const { data } = await axios.post(`${BASE_URL}/transfer`, { payload }, config);
+
+    dispatch({
+      type: TRANSFER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: TRANSFER_FAIL,
       payload: error.response && error.response.data.message ? error.response.data.message : error.message,
     });
   }

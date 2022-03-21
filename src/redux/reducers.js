@@ -16,6 +16,9 @@ import {
   LODGEMENT_SUCCESS,
   LODGEMENT_FAIL,
   LODGEMENT_REQUEST,
+  TRANSFER_SUCCESS,
+  TRANSFER_FAIL,
+  TRANSFER_REQUEST,
 } from './constants';
 
 
@@ -48,7 +51,6 @@ export const userRegisterReducer = (state = {}, action) => {
   }
 };
 
-
 export const userDetailsReducer = (state = { user: {} }, action) => {
   switch (action.type) {
     case USER_DETAILS_REQUEST:
@@ -56,6 +58,8 @@ export const userDetailsReducer = (state = { user: {} }, action) => {
     case USER_DETAILS_SUCCESS:
       return { loading: false, user: action.payload };
     case USER_DETAILS_FAIL:
+      console.log(action.payload, "payload")
+      localStorage.removeItem('userInfo')
       return { loading: false, error: action.payload };
     case USER_DETAILS_RESET:
       return { user: {} };
@@ -63,7 +67,6 @@ export const userDetailsReducer = (state = { user: {} }, action) => {
       return state;
   }
 };
-
 
 export const withdrawalReducer = (state = {}, action) => {
   switch (action.type) {
@@ -90,3 +93,17 @@ export const lodgementReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const transferReducer = (state = {}, action) => {
+  switch (action.type) {
+    case TRANSFER_REQUEST:
+      return { loading: true };
+    case TRANSFER_SUCCESS:
+      return { loading: false, transfer: action.payload, success: true };
+    case TRANSFER_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+

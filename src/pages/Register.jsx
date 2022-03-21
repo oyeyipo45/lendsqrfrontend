@@ -19,27 +19,19 @@ const Register = () => {
   const dispatch = useDispatch();
 
   const userRegister = useSelector((state) => state.userRegister);
-  const { userInfo, loading, error } = userRegister;
+  const { userInfo, loading, error , success } = userRegister;
 
-  // const userLogin = useSelector((state) => state.userLogin);
-  // const {  userInfo :  userLoginInfo, loading : userLoginLoading, error : userLoginError } = userLogin;
-
-  // useEffect(() => {
-  //   if (userInfo || userLoginInfo) {
-  //   navigate('/dashboard')
-  //   }
-  // }, [userInfo, userLoginInfo]);
-  
   const userDetails = useSelector((state) => state.userDetails);
-  const { user, loading : loadingUserDetails, error : errorUserDetails } = userDetails;
+  const {  user , loading : userDetailsLoading, error : userDetailsError } = userDetails;
 
-  console.log(user)
-   useEffect(() => {
+  useEffect(() => {
     if (user) {
-      navigate('/dashboard')
-    }
-  }, [user]);
-
+     navigate('/dashboard')
+   } else if (success) {
+    navigate('/dashboard')
+    } else if (!user) {
+    }navigate('/login')
+  }, [success, user]);
 
   const submitHandler = (e) => {
     e.preventDefault();
