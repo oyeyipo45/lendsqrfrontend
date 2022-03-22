@@ -22,7 +22,7 @@ const Header = () => {
       <nav className="nav bd-grid">
         <div>
           <Link to="/login" className="nav_logo">
-            <h2>Lendsqr</h2>
+            <h2>Lendsqr App</h2>
           </Link>
         </div>
 

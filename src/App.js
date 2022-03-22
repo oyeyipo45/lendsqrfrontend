@@ -3,6 +3,7 @@ import React, { Suspense, lazy } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { MyErrorBoundary } from './components/MyErrorBoundary'
+import Loading from './components/Loading';
 
 const Login = lazy(() => import('./pages/Login'));
 const Home = lazy(() => import('./pages/Home'));
@@ -10,11 +11,12 @@ const Register  = lazy(() => import('./pages/Register'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Notfound = lazy(() => import('./pages/Notfound'));
 
+
 function App() {
   
   return (
     <Router>
-      <Suspense fallback={'...loading !!!!!'}>
+      <Suspense fallback={< Loading />}>
         <div className=''>
           {/* <Header /> */}
           <main className=''>

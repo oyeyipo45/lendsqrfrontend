@@ -126,6 +126,19 @@ export const getUserDetails = () => async (dispatch, getState) => {
   }
 };
 
+export const ping = () => async (dispatch) => {
+  try {
+    const { data } = await axios.get(`${BASE_URL}`);
+
+    console.log(data, 'data')
+  } catch (error) {
+    dispatch({
+      type: USER_DETAILS_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
+  }
+};
+
 export const withdraw = (amount) => async (dispatch, getState) => {
   try {
     dispatch({

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../redux/actions";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 const Register = () => {
@@ -18,20 +18,23 @@ const Register = () => {
 
   const dispatch = useDispatch();
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo, loading, error, success } = userLogin;
+  
   const userRegister = useSelector((state) => state.userRegister);
-  const { userInfo, loading, error , success } = userRegister;
+  const { userInfo : userInfoRegister, loading : userRegisterLoading, error  :userRegisterError } = userRegister;
 
   const userDetails = useSelector((state) => state.userDetails);
   const {  user , loading : userDetailsLoading, error : userDetailsError } = userDetails;
 
   useEffect(() => {
-    if (user) {
-     navigate('/dashboard')
-   } else if (success) {
-    navigate('/dashboard')
-    } else if (!user) {
-    }navigate('/login')
-  }, [success, user]);
+
+      if (user.success) {
+       navigate('/dashboard')
+     } else if (userInfo && userInfoRegister) {
+      navigate('/dashboard')
+      }
+  }, [success, user, navigate, userInfoRegister]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -110,6 +113,10 @@ const Register = () => {
             <button type="submit" className="customer-signup-btn">
               Create my account
             </button>
+
+            <Link to="/login" className="customer-signin-forgot-link mt-4">
+            Click to LOGIN !!!
+          </Link>
           </div>
         </form>
       </div>

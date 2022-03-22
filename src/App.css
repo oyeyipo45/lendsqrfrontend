@@ -144,6 +144,14 @@ html {
   color: var(--primary-color-dark);
 }
 
+.loading-cover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 80vh;
+  max-width: 100vw;
+}
+
 body {
   background-color: var(--bg-color);
 }
@@ -170,6 +178,21 @@ body {
 .dash{
   color: red;
 }
+.transaction-cover{
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  padding: 2px 16px;
+  margin-bottom: .5rem;
+}
+
+
+.transaction-cover:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+  padding: 2px 16px;
+}
 
 .user-details{
   display: flex;
@@ -191,10 +214,24 @@ body {
   align-items: center;
 }
 
+.transactions{
+   max-height: 400px;
+  overflow-y: scroll;
+}
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, .5);
+  box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}
+
 .cover {
   width: 30%;
   height: 20%;
-  border: 1px solid blue;
 }
 
 .hide{
@@ -772,7 +809,6 @@ textarea {
 /* proposal */
 .proposal {
   height: 60vh;
-  border: 1px solid red;
   margin-top: 5rem;
   width: 100%;
   display: flex;
@@ -842,7 +878,6 @@ textarea {
 }
 
 .login, .register {
- border: 1px solid red;
  display: flex;
   justify-content: center;
   align-items: center;
