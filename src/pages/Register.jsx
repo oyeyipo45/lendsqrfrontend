@@ -51,7 +51,7 @@ const Register = () => {
         <div className="customer-signup-header">
           <h3 className="customer-signup-heading">Create an account</h3>
           {message && <p>{message}</p>}
-          {error && <p className="color-red">{error}</p>}
+          {userRegisterError && <p className="color-red">{userRegisterError}</p>}
           {loading && "Loading ..."}    
         </div>
 

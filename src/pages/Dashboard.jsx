@@ -54,16 +54,15 @@ const Dashboard = () => {
     setTansfer_amount('')
   }
 
-  console.log(userDetailsError, "userDetailsError")
   
   useEffect(() => {
 
     dispatch(getUserDetails())
-    // if (!userInfo) {
-    //  // navigate('/login')
-    // } else {
-    //   dispatch(getUserDetails())
-    // } 
+    if (!userInfo) {
+        navigate('/login')
+    } else {
+      dispatch(getUserDetails())
+    } 
   }, [ withdrawalSuccess, lodgementSuccess, transferSuccess]);
 
 
@@ -77,9 +76,9 @@ const Dashboard = () => {
               <h4  align='center'>User Details</h4>
               { userInfo && (
                 <>
-                <p>Name : { userInfo?.data?.first_name } { userInfo?.data?.last_name }</p>
-                <p>Email : { userInfo?.data?.email }</p>
-                  <p>Username : { userInfo?.data?.username }</p>
+                <p>Name : { userInfo?.data?.first_name || user?.data?.user[0]?.first_name } { userInfo?.data?.last_name || user?.data?.user[0]?.last_name }</p>
+                <p>Email : { userInfo?.data?.userEmail || user?.data?.user[0]?.email }</p>
+                  <p>Username : { userInfo?.data?.username || user?.data?.user[0]?.username }</p>
                 </>
               ) }
             </div>

@@ -22,12 +22,12 @@ const Login = () => {
 
 
    useEffect(() => {
-    if (userInfo) {
+    if (success) {
       navigate('/dashboard')
     }
-    // else if (user) {
-    //   navigate('/dashboard')
-    // }
+    else if (user.success && userInfo) {
+      navigate('/dashboard')
+    }
   }, [success, user]);
 
 
