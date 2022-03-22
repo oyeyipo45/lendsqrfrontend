@@ -31,8 +31,6 @@ const Dashboard = () => {
   const transferState = useSelector((state) => state.transfer);
   const { success :transferSuccess, loading :  transferLoading, error : transferError } = transferState;
 
-  console.log(transferSuccess, "transferSuccess")
-
   const withdrawHandler = () => {
     const amount = jwtGen(withdrawalAmount);
     dispatch(withdraw(amount))
@@ -108,7 +106,7 @@ const Dashboard = () => {
             <h4 align='center'>Transfer</h4>
             {transferSuccess && <p className="color-green" align="center">Transfer successful</p>}
             {transferError && <p className="color-red" align="center">{transferError}</p>}
-            {transferLoading && <p className="color-blue" align="center">"Sending ......</p>}
+            {transferLoading && <p className="color-blue" align="center">Sending ......</p>}
             <form
               
           action=""
@@ -158,7 +156,7 @@ const Dashboard = () => {
           <h4 align='center'>Fund Account</h4>
                 {lodgementSuccess && <p className="color-green" align="center">Deposit successful</p>}
                 {lodgementError && <p className="color-red" align="center">{lodgementError}</p>}
-                {transferLoading && <p className="color-blue" align="center">"Sending ......</p>}
+                {transferLoading && <p className="color-blue" align="center">Sending ......</p>}
           <form action=""  className="customer-signin-form" >
           <div className="customer-signin-form-group">
             <input
@@ -190,7 +188,7 @@ const Dashboard = () => {
             <h4 align='center'>Withdrawal</h4>
              {withdrawalSuccess && <p className="color-green" align="center">Withdrawal successful</p>}
             {withdrawalError && <p className="color-red" align="center">{withdrawalError}</p>}
-            {transferLoading && <p className="color-blue" align="center">"Sending ......</p>}
+            {transferLoading && <p className="color-blue" align="center">Sending ......</p>}
                 <form
               action=""
               

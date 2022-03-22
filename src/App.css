@@ -166,7 +166,7 @@ body {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin-top: 7rem;
+  margin-top: 3rem;
   margin-right: auto;
   margin-left: auto;
   height: 100%;
@@ -289,7 +289,7 @@ textarea {
 .bd-grid {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: .5rem;
 }
 /* nav */
 .l-header {
@@ -596,7 +596,7 @@ textarea {
 
   .footer-cover,
   .nav {
-    padding: 1rem;
+    padding: .5rem;
   }
 }
 
