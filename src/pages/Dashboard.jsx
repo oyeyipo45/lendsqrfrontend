@@ -57,6 +57,7 @@ const Dashboard = () => {
   
   useEffect(() => {
 
+
     dispatch(getUserDetails())
     if (!userInfo) {
         navigate('/login')
@@ -107,7 +108,7 @@ const Dashboard = () => {
             <h4 align='center'>Transfer</h4>
             {transferSuccess && <p className="color-green" align="center">Transfer successful</p>}
             {transferError && <p className="color-red" align="center">{transferError}</p>}
-            {transferLoading && "Sending ......"}
+            {transferLoading && <p className="color-blue" align="center">"Sending ......</p>}
             <form
               
           action=""
@@ -157,7 +158,7 @@ const Dashboard = () => {
           <h4 align='center'>Fund Account</h4>
                 {lodgementSuccess && <p className="color-green" align="center">Deposit successful</p>}
                 {lodgementError && <p className="color-red" align="center">{lodgementError}</p>}
-                {transferLoading && "Sending ......"}
+                {transferLoading && <p className="color-blue" align="center">"Sending ......</p>}
           <form action=""  className="customer-signin-form" >
           <div className="customer-signin-form-group">
             <input
@@ -189,7 +190,7 @@ const Dashboard = () => {
             <h4 align='center'>Withdrawal</h4>
              {withdrawalSuccess && <p className="color-green" align="center">Withdrawal successful</p>}
             {withdrawalError && <p className="color-red" align="center">{withdrawalError}</p>}
-            {transferLoading && "Sending ......"}
+            {transferLoading && <p className="color-blue" align="center">"Sending ......</p>}
                 <form
               action=""
               

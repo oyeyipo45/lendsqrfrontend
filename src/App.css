@@ -469,6 +469,10 @@ textarea {
   color: red;
 }
 
+.color-blue {
+  color: rgb(102, 134, 240);
+}
+
 .color-green {
   color: green;
 }

@@ -52,7 +52,7 @@ const Register = () => {
           <h3 className="customer-signup-heading">Create an account</h3>
           {message && <p>{message}</p>}
           {userRegisterError && <p className="color-red">{userRegisterError}</p>}
-          {loading && "Loading ..."}    
+          {userRegisterLoading && <p className="color-blue" align="center">Registering ......</p>}    
         </div>
 
         <form action="" onSubmit={submitHandler}>
